@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:gap/gap.dart';
-import 'package:instagram_clone/src/feature/auth/widget/facebook_login_widget.dart';
-import 'package:instagram_clone/src/feature/auth/widget/option_or_widget.dart';
+
 import 'package:instagram_clone/src/feature/auth/widget/signup_or_login_widget.dart';
 import 'package:instagram_clone/src/utils/app_colors.dart';
-import 'package:instagram_clone/src/utils/app_text_style.dart';
+
 import 'package:instagram_clone/src/widget/custom_button_widget.dart';
 import 'package:instagram_clone/src/widget/custom_text_form_widget.dart';
 
-class LoginScreen extends StatelessWidget {
-  static const routeName = 'LoginScreen';
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  static const routeName = 'RegisterScreen';
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +31,37 @@ class LoginScreen extends StatelessWidget {
                   height: 49.h,
                 ),
                 Gap(50.h),
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 64.r,
+                      backgroundImage: const NetworkImage(
+                        "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW4lMjBwaWN0dXJlfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+                      ),
+                      backgroundColor: Colors.transparent,
+                    ),
+                    Positioned(
+                      bottom: -10.h,
+                      left: 80.w,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.add_a_photo,
+                          size: 28.sp,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Gap(15.h),
+                CustomTextFormFieldWidget(
+                  label: "username",
+                  hintText: "Enter your username",
+                  controller: TextEditingController(),
+                  myValidator: (textValue) {},
+                ),
+                Gap(10.h),
                 CustomTextFormFieldWidget(
                   label: "Email",
                   hintText: "Enter your email",
@@ -46,17 +76,16 @@ class LoginScreen extends StatelessWidget {
                   myValidator: (textValue) {},
                 ),
                 Gap(10.h),
-                _forgotPasswordWidget(),
-                Gap(15.h),
-                CustomButtonWidget(
-                  buttonText: "Log in",
-                  onPressed: () {},
+                CustomTextFormFieldWidget(
+                  label: "Bio",
+                  hintText: "Enter your bio",
+                  controller: TextEditingController(),
+                  myValidator: (textValue) {},
                 ),
-                Gap(15.h),
-                const OptionOrWidget(),
-                Gap(20.h),
-                FacebookLoginWidget(
-                  onTap: () {},
+                Gap(25.h),
+                CustomButtonWidget(
+                  buttonText: "Register",
+                  onPressed: () {},
                 ),
                 Gap(50.h),
                 SignUpOrLoginWidget(
@@ -67,21 +96,6 @@ class LoginScreen extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  InkWell _forgotPasswordWidget() {
-    return InkWell(
-      onTap: () {
-        // Add your 'Forgot password?' behavior here
-      },
-      child: const Align(
-        alignment: Alignment.centerRight,
-        child: Text(
-          'Forgot password?',
-          style: AppTextStyle.textStyle14,
         ),
       ),
     );
