@@ -6,21 +6,23 @@ import 'package:instagram_clone/src/utils/app_text_style.dart';
 typedef Validator = String? Function(String?);
 
 class CustomTextFormFieldWidget extends StatefulWidget {
-  String label;
-  TextInputType keyboardType;
-  bool obscureText;
+  final String label;
+  final TextInputType keyboardType;
+  final bool obscureText;
 
-  bool isPassword;
-  TextEditingController controller;
-  Validator myValidator;
+  final bool isPassword;
+  final TextEditingController controller;
+  final Validator myValidator;
+  final String hintText;
 
-  CustomTextFormFieldWidget({
+  const CustomTextFormFieldWidget({
     required this.label,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
     this.isPassword = false,
     required this.controller,
     required this.myValidator,
+    required this.hintText,
   });
 
   @override
@@ -41,6 +43,11 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
         ),
         obscureText: widget.obscureText,
         decoration: InputDecoration(
+          hintText: widget.hintText,
+          hintStyle: AppTextStyle.textStyle16.copyWith(
+            color: AppColors.secondaryColor.shade700,
+            fontWeight: FontWeight.w400,
+          ),
           fillColor: AppColors.mobileSearchColor,
           filled: true,
           labelText: widget.label,
