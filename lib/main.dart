@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         //   mobileScreen: MobileScreen(),
         //   webScreen: WebScreen(),
         // ),
-        home: RegisterScreen(),
+        home: LoginScreen(),
       ),
     );
   }
