@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/firebase_options.dart';
 import 'package:instagram_clone/src/feature/auth/login/view/login_screen.dart';
-import 'package:instagram_clone/src/feature/auth/register/register_screen.dart';
+import 'package:instagram_clone/src/feature/auth/register/view/register_screen.dart';
 import 'package:instagram_clone/src/responsive/mobile_screen.dart';
 import 'package:instagram_clone/src/responsive/responsive_ui.dart';
 import 'package:instagram_clone/src/responsive/web_screen.dart';
