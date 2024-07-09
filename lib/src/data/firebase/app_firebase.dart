@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:instagram_clone/src/data/model/app_user.dart';
+import '../model/app_user.dart';
 
 class AppFirebase {
   //? get collection data from firebase

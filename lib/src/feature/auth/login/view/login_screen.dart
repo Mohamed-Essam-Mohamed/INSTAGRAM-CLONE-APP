@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
-import 'package:instagram_clone/src/feature/auth/login/view_model/login_view_model_cubit.dart';
-import 'package:instagram_clone/src/feature/auth/widget/facebook_login_widget.dart';
-import 'package:instagram_clone/src/feature/auth/widget/option_or_widget.dart';
-import 'package:instagram_clone/src/feature/auth/widget/signup_or_login_widget.dart';
-import 'package:instagram_clone/src/utils/app_colors.dart';
-import 'package:instagram_clone/src/utils/app_text_style.dart';
-import 'package:instagram_clone/src/utils/dialog_app.dart';
-import 'package:instagram_clone/src/widget/custom_button_widget.dart';
-import 'package:instagram_clone/src/widget/custom_text_form_widget.dart';
+import '../view_model/login_view_model_cubit.dart';
+import '../../widget/facebook_login_widget.dart';
+import '../../widget/option_or_widget.dart';
+import '../../widget/signup_or_login_widget.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_text_style.dart';
+import '../../../../utils/dialog_app.dart';
+import '../../../../widget/custom_button_widget.dart';
+import '../../../../widget/custom_text_form_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = 'LoginScreen';

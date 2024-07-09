@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/src/utils/app_colors.dart';
+import 'app_colors.dart';
 
 class AppTextStyle {
   static const TextStyle textStyle18 = TextStyle(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:instagram_clone/src/utils/app_colors.dart';
-import 'package:instagram_clone/src/utils/app_text_style.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_text_style.dart';
 
 class BottomSheetOptions extends StatelessWidget {
   BottomSheetOptions({

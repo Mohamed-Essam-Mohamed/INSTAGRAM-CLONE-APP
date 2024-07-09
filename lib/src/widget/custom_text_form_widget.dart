@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:instagram_clone/src/utils/app_colors.dart';
-import 'package:instagram_clone/src/utils/app_text_style.dart';
+import '../utils/app_colors.dart';
+import '../utils/app_text_style.dart';
 
 typedef Validator = String? Function(String?);
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/src/utils/app_text_style.dart';
+
+import '../../../utils/app_text_style.dart';
 
 class OptionOrWidget extends StatelessWidget {
   const OptionOrWidget({

@@ -4,8 +4,8 @@ import 'dart:typed_data';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/src/data/firebase/app_firebase.dart';
-import 'package:instagram_clone/src/data/model/app_user.dart';
+import '../../../../data/firebase/app_firebase.dart';
+import '../../../../data/model/app_user.dart';
 import 'package:meta/meta.dart';
 
 part 'register_view_model_state.dart';
