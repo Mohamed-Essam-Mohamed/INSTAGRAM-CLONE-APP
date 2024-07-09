@@ -6,12 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:gap/gap.dart';
+import 'package:instagram_clone/src/feature/auth/login/view/login_screen.dart';
+import 'package:instagram_clone/src/feature/init_screen/view/init_screen.dart';
 import '../view_model/register_view_model_cubit.dart';
 import '../../widget/bottom_sheet_selected_image.dart';
 
 import '../../widget/signup_or_login_widget.dart';
 import '../../../../utils/app_colors.dart';
-import '../../../../utils/app_text_style.dart';
 import '../../../../utils/dialog_app.dart';
 import '../../../../utils/image_functions.dart';
 
@@ -60,6 +61,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 }
                 if (state is RegisterViewModelSuccess) {
                   Navigator.of(context).pop();
+                  Future.delayed(Durations.extralong1, () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(LoginScreen.routeName);
+                  });
                 }
               },
               child: Form(
@@ -74,31 +79,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 49.h,
                     ),
                     Gap(50.h),
-                    Stack(
-                      children: [
-                        CircleAvatar(
-                          radius: 64.r,
-                          backgroundImage: viewModel.image == null
-                              ? const NetworkImage(
-                                  "https://cvhrma.org/wp-content/uploads/2015/07/default-profile-photo.jpg",
-                                )
-                              : FileImage(viewModel.image!),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        Positioned(
-                          bottom: -10.h,
-                          left: 80.w,
-                          child: IconButton(
-                            onPressed: _selectedImage,
-                            icon: Icon(
-                              Icons.add_a_photo,
-                              size: 28.sp,
-                              color: Colors.white,
-                            ),
+                    Stack(children: [
+                      CircleAvatar(
+                        radius: 64.r,
+                        backgroundImage: viewModel.image == null
+                            ? const NetworkImage(
+                                "https://cvhrma.org/wp-content/uploads/2015/07/default-profile-photo.jpg",
+                              )
+                            : FileImage(viewModel.image!),
+                        backgroundColor: Colors.transparent,
+                      ),
+                      Positioned(
+                        bottom: -10.h,
+                        left: 80.w,
+                        child: IconButton(
+                          onPressed: _selectedImage,
+                          icon: Icon(
+                            Icons.add_a_photo,
+                            size: 28.sp,
+                            color: Colors.white,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ]),
                     Gap(15.h),
                     CustomTextFormFieldWidget(
                       label: "name",
@@ -207,8 +210,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Gap(50.h),
                     SignUpOrLoginWidget(
                       title: 'Don\'t have an account?',
-                      subTitle: 'Sign up',
-                      onTap: () {},
+                      subTitle: 'Login',
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
                     )
                   ],
                 ),

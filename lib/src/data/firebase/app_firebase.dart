@@ -33,8 +33,9 @@ class AppFirebase {
   }
 
   //? get user from firebase
-  static Future<AppUser?> getUser(String uid) {
-    return getCollectionUsers().doc(uid).get().then((value) => value.data());
+  static Future<AppUser?> getUser(String uid) async {
+    final snapshot = await getCollectionUsers().doc(uid).get();
+    return snapshot.data();
   }
 
   //? check unique username
