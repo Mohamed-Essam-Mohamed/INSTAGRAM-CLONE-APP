@@ -39,28 +39,33 @@ class RegisterViewModelCubit extends Cubit<RegisterViewModelState> {
             password: passwordController.text,
           );
 
+          //? upload image
           AppFirebase.addImageProfile(
             childName: "profile",
             path: image ?? File(""),
             isPost: false,
             authIdUser: credential.user!.uid,
           );
+          //? get url image
           String photoUrl = await AppFirebase.getUrlImageProfile(
             childName: "profile",
             uint8List: convertImageToUint8List(image),
             currentUser: credential.user!.uid,
           );
           //? add user to firestore
-          AppFirebase.addUser(AppUser(
-            name: nameController.text,
-            email: emailController.text,
-            username: usernameController.text,
-            bio: bioController.text,
-            uid: credential.user!.uid,
-            photoUrl: photoUrl,
-            following: [],
-            follwers: [],
-          ));
+          AppFirebase.addUser(
+            AppUser(
+              name: nameController.text,
+              email: emailController.text,
+              username: usernameController.text,
+              bio: bioController.text,
+              uid: credential.user!.uid,
+              photoUrl: photoUrl,
+              following: [],
+              follwers: [],
+            ),
+          );
+
           emit(RegisterViewModelSuccess());
         }
       } on FirebaseAuthException catch (e) {
@@ -76,6 +81,8 @@ class RegisterViewModelCubit extends Cubit<RegisterViewModelState> {
               errorMessage: "The account already exists for that email.",
             ),
           );
+        } else {
+          emit(RegisterViewModelError(errorMessage: e.toString()));
         }
       } catch (e) {
         emit(RegisterViewModelError(errorMessage: e.toString()));

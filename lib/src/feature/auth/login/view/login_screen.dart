@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:instagram_clone/src/feature/auth/register/view/register_screen.dart';
+import 'package:instagram_clone/src/feature/init_screen/view/init_screen.dart';
+import 'package:instagram_clone/src/save_data_user/save_data_user.dart';
+import 'package:provider/provider.dart';
 import '../view_model/login_view_model_cubit.dart';
 import '../../widget/facebook_login_widget.dart';
 import '../../widget/option_or_widget.dart';
@@ -45,6 +49,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
                 if (state is LoginViewModelSuccess) {
                   Navigator.of(context).pop();
+                  var saveUserProvider =
+                      Provider.of<SaveUserProvider>(context, listen: false);
+                  saveUserProvider.user = state.userObject;
+                  Future.delayed(Durations.extralong1, () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(InitScreen.routeName);
+                  });
                 }
               },
               child: Form(
@@ -100,8 +111,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     Gap(50.h),
                     SignUpOrLoginWidget(
                       title: 'Don\'t have an account?',
-                      subTitle: 'Sign up',
-                      onTap: () {},
+                      subTitle: 'Register',
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(RegisterScreen.routeName);
+                      },
                     )
                   ],
                 ),

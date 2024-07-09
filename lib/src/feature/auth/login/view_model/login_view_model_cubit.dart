@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/src/data/firebase/app_firebase.dart';
+import 'package:instagram_clone/src/data/model/app_user.dart';
+import 'package:instagram_clone/src/utils/app_shared_preferences.dart';
 import 'package:meta/meta.dart';
 
 part 'login_view_model_state.dart';
@@ -19,7 +22,16 @@ class LoginViewModelCubit extends Cubit<LoginViewModelState> {
           email: emailController.text,
           password: passwordController.text,
         );
-        emit(LoginViewModelSuccess());
+        //? save token in shared preferences
+        if (SharedPreferencesUtils.getData(key: 'TokenId') == null) {
+          SharedPreferencesUtils.saveData(
+            key: 'TokenId',
+            value: credential.user!.uid,
+          );
+        }
+        //? save user in provider
+        var userObject = await AppFirebase.getUser(credential.user!.uid);
+        emit(LoginViewModelSuccess(userObject: userObject!));
       } on FirebaseAuthException catch (e) {
         print(e.message.toString());
         if (e.code == 'user-not-found') {

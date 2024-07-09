@@ -7,7 +7,11 @@ class LoginViewModelInitial extends LoginViewModelState {}
 
 class LoginViewModelLoading extends LoginViewModelState {}
 
-class LoginViewModelSuccess extends LoginViewModelState {}
+class LoginViewModelSuccess extends LoginViewModelState {
+  AppUser userObject;
+
+  LoginViewModelSuccess({required this.userObject});
+}
 
 class LoginViewModelError extends LoginViewModelState {
   final String errorMessage;
