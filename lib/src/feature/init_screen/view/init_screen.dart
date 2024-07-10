@@ -8,6 +8,7 @@ import 'package:instagram_clone/src/feature/profile/view/profile_screen.dart';
 import 'package:instagram_clone/src/feature/search/view/search_screen.dart';
 import 'package:instagram_clone/src/save_data_user/save_data_user.dart';
 import 'package:instagram_clone/src/utils/app_colors.dart';
+import 'package:instagram_clone/src/utils/app_shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 class InitScreen extends StatefulWidget {
@@ -18,21 +19,47 @@ class InitScreen extends StatefulWidget {
 }
 
 class _InitScreenState extends State<InitScreen> {
-  List<Widget> widgetList = [
-    HomeScreen(),
-    SearchScreen(),
-    PostScreen(),
-    LoveScreen(),
-    ProfileScreen(),
-  ];
-
   int index = 0;
+  late PageController pageController;
+  late String urlImage;
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController();
+    urlImage = SharedPreferencesUtils.getData(key: 'profileImageUrl') as String;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    pageController.dispose();
+  }
+
+  void navigationTapped(int index) {
+    pageController.jumpToPage(index);
+  }
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<SaveUserProvider>(context);
 
     return Scaffold(
+      body: PageView(
+        controller: pageController,
+        onPageChanged: (index) {
+          setState(() {
+            this.index = index;
+          });
+        },
+        children: [
+          HomeScreen(),
+          SearchScreen(),
+          PostScreen(),
+          LoveScreen(),
+          ProfileScreen(),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: true,
@@ -45,7 +72,7 @@ class _InitScreenState extends State<InitScreen> {
         elevation: 0,
         currentIndex: index,
         onTap: (selectedIndex) {
-          index = selectedIndex;
+          navigationTapped(selectedIndex);
 
           setState(() {});
         },
@@ -93,18 +120,17 @@ class _InitScreenState extends State<InitScreen> {
           // ignore: prefer_const_constructors
           BottomNavigationBarItem(
             icon: index == 4
-                ? circleAvatarProfile(w: 1, provider: provider)
-                : circleAvatarProfile(w: 0, provider: provider),
+                ? circleAvatarProfile(w: 1, url: urlImage)
+                : circleAvatarProfile(w: 0, url: urlImage),
             label: '',
           ),
         ],
       ),
-      body: widgetList[index],
     );
   }
 
   //? container profile
-  Container circleAvatarProfile({required double w, required var provider}) {
+  Container circleAvatarProfile({required double w, required String url}) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -115,9 +141,7 @@ class _InitScreenState extends State<InitScreen> {
       ),
       child: CircleAvatar(
         radius: 18.r,
-        backgroundImage: provider.user?.photoUrl == null
-            ? null
-            : NetworkImage(provider.user?.photoUrl ?? ""),
+        backgroundImage: NetworkImage(url),
         backgroundColor: AppColors.primaryColor,
       ),
     );

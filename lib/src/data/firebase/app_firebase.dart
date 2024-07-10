@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:instagram_clone/src/data/model/app_post.dart';
 import '../model/app_user.dart';
 
 class AppFirebase {
@@ -46,6 +47,7 @@ class AppFirebase {
         .then((value) => value.docs.isEmpty);
   }
 
+  //! firebase storage
   //? get collection images profile from firebase storage
   static Reference getCollectionImagesProfile() {
     return FirebaseStorage.instance.ref();
@@ -55,7 +57,6 @@ class AppFirebase {
   static Future<void> addImageProfile({
     required String childName,
     required File path,
-    required bool isPost,
     required String authIdUser,
   }) {
     return getCollectionImagesProfile()
@@ -99,16 +100,39 @@ class AppFirebase {
         .child(authIdUser)
         .getDownloadURL();
   }
-  // //? update image profile to firebase storage
-  // static Future<void> updateImageProfile({
-  //   required String childName,
-  //   required String authIdUser,
-  //   required File path,
-  //   required bool isPost,
-  // }) {
-  //   return getCollectionImagesProfile()
-  //       .child(childName)
-  //       .child(authIdUser)
-  //       .putFile(path);
-  // }
+
+  //! post firebase storage
+  //? add post image in app user
+  static Future<String> addPostImage({
+    required String childName,
+    required String authIdUser,
+    required String uid,
+    required File path,
+  }) async {
+    UploadTask uploadTask = getCollectionImagesProfile()
+        .child(childName)
+        .child(authIdUser)
+        .child(uid)
+        .putFile(path);
+    TaskSnapshot snap = await uploadTask;
+    String downloadUrl = await snap.ref.getDownloadURL();
+    return downloadUrl;
+  }
+
+//! save post fireBase firestore
+  //? get collection data from firebase
+  static CollectionReference<AppPost> getCollectionPosts() {
+    return FirebaseFirestore.instance
+        .collection(AppPost.collection)
+        .withConverter(
+          fromFirestore: (snapshot, options) =>
+              AppPost.fromJson(snapshot.data()!),
+          toFirestore: (value, options) => value.toJson(),
+        );
+  }
+
+  //? add post to firebase
+  static Future<void> addPost({required AppPost post, required String uid}) {
+    return getCollectionPosts().doc(uid).set(post);
+  }
 }
