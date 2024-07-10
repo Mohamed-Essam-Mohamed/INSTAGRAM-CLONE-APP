@@ -40,20 +40,19 @@ class RegisterViewModelCubit extends Cubit<RegisterViewModelState> {
           );
 
           //? upload image
-          AppFirebase.addImageProfile(
-            childName: "profile",
-            path: image ?? File(""),
-            isPost: false,
+          await AppFirebase.addImageProfile(
+            childName: "profileImages",
+            path: image!,
             authIdUser: credential.user!.uid,
           );
           //? get url image
           String photoUrl = await AppFirebase.getUrlImageProfile(
-            childName: "profile",
+            childName: "profileImages",
             uint8List: convertImageToUint8List(image),
             currentUser: credential.user!.uid,
           );
           //? add user to firestore
-          AppFirebase.addUser(
+          await AppFirebase.addUser(
             AppUser(
               name: nameController.text,
               email: emailController.text,
