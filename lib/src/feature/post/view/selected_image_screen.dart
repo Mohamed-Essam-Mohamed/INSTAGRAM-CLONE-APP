@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:instagram_clone/src/feature/init_screen/init_screen.dart';
 import 'package:instagram_clone/src/feature/post/view/post_screen.dart';
+import 'package:instagram_clone/src/feature/post/view/widget/text_form_field_comment_widget.dart';
 import 'package:instagram_clone/src/feature/post/view_model/selected_image_view_model/selected_image_view_model_cubit.dart';
 import 'package:instagram_clone/src/save_data_user/save_data_user.dart';
 import 'package:instagram_clone/src/utils/app_shared_preferences.dart';
@@ -28,17 +29,15 @@ class _SelectedImageScreenState extends State<SelectedImageScreen> {
   late String urlImage;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     urlImage = SharedPreferencesUtils.getData(key: 'profileImageUrl') as String;
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     viewModel.close();
-    debugPrint('?????????????????????post screen dispose?????????????????????');
+    viewModel.captionController.dispose();
   }
 
   @override
@@ -47,29 +46,7 @@ class _SelectedImageScreenState extends State<SelectedImageScreen> {
         ModalRoute.of(context)!.settings.arguments as ImageDataClass;
     var providerUser = Provider.of<SaveUserProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Selected Image', style: AppTextStyle.textStyle16),
-        centerTitle: true,
-        actions: [
-          // icon post
-          TextButton(
-            onPressed: () async {
-              viewModel.postImage(
-                pathImage: arguments.image,
-                name: providerUser.user?.name ?? "",
-                profileImage: urlImage,
-                userName: providerUser.user?.username ?? "",
-              );
-            },
-            child: Text(
-              'Post',
-              style: AppTextStyle.textStyle16.copyWith(
-                color: AppColors.blueColor,
-              ),
-            ),
-          ),
-        ],
-      ),
+      appBar: _appBarWidget(arguments, providerUser),
       body: BlocConsumer<SelectedImageViewModelCubit,
           SelectedImageViewModelState>(
         bloc: viewModel,
@@ -95,10 +72,8 @@ class _SelectedImageScreenState extends State<SelectedImageScreen> {
                   radius: 25.h,
                 ),
                 Gap(5.h),
-                Expanded(
-                  child: TextFieldCommentWidget(
-                    commentController: viewModel.captionController,
-                  ),
+                TextFieldCommentWidget(
+                  commentController: viewModel.captionController,
                 ),
                 Gap(5.h),
                 Container(
@@ -119,43 +94,33 @@ class _SelectedImageScreenState extends State<SelectedImageScreen> {
       ),
     );
   }
-}
 
-class TextFieldCommentWidget extends StatelessWidget {
-  const TextFieldCommentWidget({
-    super.key,
-    required this.commentController,
-  });
-  final TextEditingController commentController;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: commentController,
-      maxLines: 4,
-      minLines: 2,
-      decoration: InputDecoration(
-        hintText: 'Write a comment.....',
-        hintStyle: AppTextStyle.textStyle16.copyWith(
-          color: AppColors.secondaryColor.shade700,
-          fontWeight: FontWeight.w400,
+  AppBar _appBarWidget(
+    ImageDataClass arguments,
+    SaveUserProvider providerUser,
+  ) {
+    return AppBar(
+      title: const Text('Selected Image', style: AppTextStyle.textStyle16),
+      centerTitle: true,
+      actions: [
+        // icon post
+        TextButton(
+          onPressed: () async {
+            viewModel.postImage(
+              pathImage: arguments.image,
+              name: providerUser.user?.name ?? "",
+              profileImage: urlImage,
+              userName: providerUser.user?.username ?? "",
+            );
+          },
+          child: Text(
+            'Post',
+            style: AppTextStyle.textStyle16.copyWith(
+              color: AppColors.blueColor,
+            ),
+          ),
         ),
-        contentPadding:
-            EdgeInsets.symmetric(horizontal: 15.sp, vertical: 10.sp),
-        enabledBorder:
-            _outLineInputBorder(color: AppColors.mobileBackgroundColor),
-        focusedBorder: _outLineInputBorder(color: AppColors.blueColor),
-      ),
-    );
-  }
-
-  OutlineInputBorder _outLineInputBorder({required Color color}) {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(2.r),
-      borderSide: BorderSide(
-        width: 1,
-        color: color,
-      ),
+      ],
     );
   }
 }
