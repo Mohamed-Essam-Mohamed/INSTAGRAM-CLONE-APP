@@ -40,7 +40,7 @@ class AppPost {
       uid: map['uid'] as String,
       username: map['username'] as String,
       postId: map['postId'] as String,
-      date: map['date'] as String,
+      date: map['date'],
       postImage: map['postImage'] as String,
       profileImage: map['profileImage'] as String,
       likes: List.from(map['likes']),

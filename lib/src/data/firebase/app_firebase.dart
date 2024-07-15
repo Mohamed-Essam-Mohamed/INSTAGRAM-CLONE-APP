@@ -4,9 +4,11 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:instagram_clone/src/data/model/app_post.dart';
+import 'package:uuid/uuid.dart';
 import '../model/app_user.dart';
 
 class AppFirebase {
+  //! firebase firestore
   //? get collection data from firebase
   static CollectionReference<AppUser> getCollectionUsers() {
     return FirebaseFirestore.instance
@@ -28,18 +30,13 @@ class AppFirebase {
     return getCollectionUsers().doc(user.uid).update(user.toJson());
   }
 
-  //? delete user to firebase
-  static Future<void> deleteUser(AppUser user) {
-    return getCollectionUsers().doc(user.uid).delete();
-  }
-
   //? get user from firebase
   static Future<AppUser?> getUser(String uid) async {
     final snapshot = await getCollectionUsers().doc(uid).get();
     return snapshot.data();
   }
 
-  //? check unique username
+  //? check unique username from firebase
   static Future<bool> checkUniqueUsername(String username) {
     return getCollectionUsers()
         .where('username', isEqualTo: username)
@@ -119,7 +116,7 @@ class AppFirebase {
     return downloadUrl;
   }
 
-//! save post fireBase firestore
+  //! save post fireBase firestore
   //? get collection data from firebase
   static CollectionReference<AppPost> getCollectionPosts() {
     return FirebaseFirestore.instance
@@ -132,7 +129,100 @@ class AppFirebase {
   }
 
   //? add post to firebase
-  static Future<void> addPost({required AppPost post, required String uid}) {
-    return getCollectionPosts().doc(uid).set(post);
+  static Future<void> addPost({
+    required AppPost post,
+    required String postId,
+  }) async {
+    return await getCollectionPosts().doc(postId).set(post);
+  }
+
+  //? get post from firebase snapshot
+  static Stream<QuerySnapshot<AppPost>> getPost() {
+    return getCollectionPosts().orderBy('date', descending: true).snapshots();
+  }
+
+  //? update Likes
+  static Future<void> updateLikes({
+    required String postId,
+    required List likes,
+    required String uid,
+  }) async {
+    if (likes.contains(uid)) {
+      await getCollectionPosts().doc(postId).update({
+        'likes': FieldValue.arrayRemove([uid])
+      });
+    } else {
+      await getCollectionPosts().doc(postId).update({
+        'likes': FieldValue.arrayUnion([uid])
+      });
+    }
+  }
+
+  //! add comment firebase firestore
+  //? get collection data from firebase
+  static Future<void> addComments(
+      {required String postId,
+      required String profileUrl,
+      required String userName,
+      required String uid,
+      required String comment}) async {
+    var commentId = const Uuid().v4();
+    return getCollectionPosts()
+        .doc(postId)
+        .collection("comments")
+        .doc(commentId)
+        .set({
+      "profileUrl": profileUrl,
+      "userName": userName,
+      "uid": uid,
+      "comment": comment,
+      "date": DateTime.now().millisecondsSinceEpoch,
+      "commentId": commentId,
+      "likes": [],
+    });
+  }
+
+  //? get comment from firebase snapshot
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getComment(String postId) {
+    return getCollectionPosts()
+        .doc(postId)
+        .collection("comments")
+        .orderBy("date", descending: true)
+        .snapshots();
+  }
+
+  //? get length comment from firebase snapshot
+  static Future<int> getLengthComment(String postId) {
+    return getCollectionPosts()
+        .doc(postId)
+        .collection("comments")
+        .get()
+        .then((value) => value.size);
+  }
+
+  //? Update Likes Comment
+  static Future<void> updateLikesComment({
+    required String postId,
+    required String commentId,
+    required List likes,
+    required String uid,
+  }) async {
+    if (likes.contains(uid)) {
+      await getCollectionPosts()
+          .doc(postId)
+          .collection("comments")
+          .doc(commentId)
+          .update({
+        "likes": FieldValue.arrayRemove([uid])
+      });
+    } else {
+      await getCollectionPosts()
+          .doc(postId)
+          .collection("comments")
+          .doc(commentId)
+          .update({
+        "likes": FieldValue.arrayUnion([uid])
+      });
+    }
   }
 }

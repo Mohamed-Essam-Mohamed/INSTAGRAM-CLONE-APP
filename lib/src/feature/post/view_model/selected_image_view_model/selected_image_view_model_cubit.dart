@@ -19,10 +19,12 @@ class SelectedImageViewModelCubit extends Cubit<SelectedImageViewModelState> {
   String id = const Uuid().v1();
   //? function post image
 
-  void postImage(
-      {required File pathImage,
-      required String nameUser,
-      required String profileImage}) async {
+  void postImage({
+    required File pathImage,
+    required String name,
+    required String profileImage,
+    required String userName,
+  }) async {
     emit(SelectedImageViewModelLoading());
     try {
       //? upload image post
@@ -39,14 +41,14 @@ class SelectedImageViewModelCubit extends Cubit<SelectedImageViewModelState> {
         post: AppPost(
           decoration: captionController.text ?? "",
           uid: token,
-          username: nameUser,
+          username: name,
           postId: id,
           date: DateTime.now(),
           postImage: postUrlImag,
           profileImage: profileImage,
           likes: [],
         ),
-        uid: token,
+        postId: id,
       );
       emit(SelectedImageViewModelSuccess());
     } catch (e) {

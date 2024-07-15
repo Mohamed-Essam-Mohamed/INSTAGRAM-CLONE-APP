@@ -13,6 +13,7 @@ class SaveUserProvider extends ChangeNotifier {
   initUser() async {
     if (firebaseUser != null) {
       user = await AppFirebase.getUser(firebaseUser?.uid ?? "");
+      notifyListeners();
     }
   }
 }

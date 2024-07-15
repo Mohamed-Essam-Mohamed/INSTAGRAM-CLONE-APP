@@ -38,6 +38,7 @@ class _SelectedImageScreenState extends State<SelectedImageScreen> {
     // TODO: implement dispose
     super.dispose();
     viewModel.close();
+    debugPrint('?????????????????????post screen dispose?????????????????????');
   }
 
   @override
@@ -55,8 +56,9 @@ class _SelectedImageScreenState extends State<SelectedImageScreen> {
             onPressed: () async {
               viewModel.postImage(
                 pathImage: arguments.image,
-                nameUser: providerUser.user?.name ?? "",
+                name: providerUser.user?.name ?? "",
                 profileImage: urlImage,
+                userName: providerUser.user?.username ?? "",
               );
             },
             child: Text(
