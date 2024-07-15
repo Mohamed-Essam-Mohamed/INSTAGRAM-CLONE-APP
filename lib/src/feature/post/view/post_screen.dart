@@ -35,7 +35,7 @@ class _PostScreenState extends State<PostScreen> {
           icon: Icon(
             Icons.upload_sharp,
             color: AppColors.primaryColor,
-            size: 50.sp,
+            size: 60.sp,
           ),
         ),
       ),
@@ -55,11 +55,18 @@ class _PostScreenState extends State<PostScreen> {
           setState(() {});
 
           image != null
-              ? Future.delayed(const Duration(milliseconds: 500), () {
-                  Navigator.of(context).pushNamed(SelectedImageScreen.routeName,
+              ? Future.delayed(
+                  const Duration(milliseconds: 200),
+                  () {
+                    Navigator.of(context).pushNamed(
+                      SelectedImageScreen.routeName,
                       arguments: ImageDataClass(
-                          image: image!, urlImageProfile: urlImageProfile));
-                })
+                        image: image!,
+                        urlImageProfile: urlImageProfile,
+                      ),
+                    );
+                  },
+                )
               : Navigator.pop(context);
         },
         onPressedGallery: () async {
@@ -70,13 +77,18 @@ class _PostScreenState extends State<PostScreen> {
           setState(() {});
           // Navigator.pop(context);
           image != null
-              ? Future.delayed(const Duration(milliseconds: 500), () {
-                  Navigator.of(context).pushNamed(SelectedImageScreen.routeName,
+              ? Future.delayed(
+                  const Duration(milliseconds: 200),
+                  () {
+                    Navigator.of(context).pushNamed(
+                      SelectedImageScreen.routeName,
                       arguments: ImageDataClass(
                         image: image!,
                         urlImageProfile: urlImageProfile,
-                      ));
-                })
+                      ),
+                    );
+                  },
+                )
               : Navigator.pop(context);
         },
       ),
