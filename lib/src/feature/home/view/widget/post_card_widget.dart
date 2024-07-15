@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:instagram_clone/src/data/firebase/app_firebase.dart';
 import 'package:instagram_clone/src/data/model/app_post.dart';
 import 'package:instagram_clone/src/feature/home/view/comment_screen.dart';
-import 'package:instagram_clone/src/feature/init_screen/view/init_screen.dart';
+import 'package:instagram_clone/src/feature/init_screen/init_screen.dart';
 import 'package:instagram_clone/src/utils/app_colors.dart';
 import 'package:instagram_clone/src/utils/app_text_style.dart';
 import 'package:instagram_clone/src/widget/like_animation.dart';

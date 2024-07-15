@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/src/feature/auth/widget/bottom_sheet_selected_image.dart';
-import 'package:instagram_clone/src/feature/init_screen/view/init_screen.dart';
 import 'package:instagram_clone/src/feature/post/view/selected_image_screen.dart';
 import 'package:instagram_clone/src/utils/app_colors.dart';
 import 'package:instagram_clone/src/utils/app_shared_preferences.dart';

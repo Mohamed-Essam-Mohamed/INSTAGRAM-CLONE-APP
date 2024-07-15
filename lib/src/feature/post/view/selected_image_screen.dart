@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:instagram_clone/src/feature/init_screen/view/init_screen.dart';
+import 'package:instagram_clone/src/feature/init_screen/init_screen.dart';
 import 'package:instagram_clone/src/feature/post/view/post_screen.dart';
 import 'package:instagram_clone/src/feature/post/view_model/selected_image_view_model/selected_image_view_model_cubit.dart';
 import 'package:instagram_clone/src/save_data_user/save_data_user.dart';
