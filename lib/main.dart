@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:instagram_clone/src/feature/home/view/comment_screen.dart';
 import 'package:instagram_clone/src/feature/init_screen/view/init_screen.dart';
 import 'package:instagram_clone/src/feature/post/view/selected_image_screen.dart';
 import 'package:instagram_clone/src/save_data_user/save_data_user.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
           RegisterScreen.routeName: (context) => const RegisterScreen(),
           InitScreen.routeName: (context) => InitScreen(),
           SelectedImageScreen.routeName: (context) => SelectedImageScreen(),
+          CommentScreen.routeName: (context) => CommentScreen(),
         },
       ),
     );
