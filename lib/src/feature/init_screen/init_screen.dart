@@ -31,7 +31,6 @@ class _InitScreenState extends State<InitScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     pageController.dispose();
   }
@@ -52,7 +51,7 @@ class _InitScreenState extends State<InitScreen> {
             this.index = index;
           });
         },
-        children: [
+        children: const [
           HomeScreen(),
           SearchScreen(),
           PostScreen(),
@@ -140,7 +139,7 @@ class _InitScreenState extends State<InitScreen> {
         shape: BoxShape.circle,
       ),
       child: CircleAvatar(
-        radius: 18.r,
+        radius: w == 1 ? 17.r : 18.r,
         backgroundImage: NetworkImage(url),
         backgroundColor: AppColors.primaryColor,
       ),

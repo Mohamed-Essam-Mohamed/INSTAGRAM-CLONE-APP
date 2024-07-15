@@ -1,12 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
 import 'package:instagram_clone/src/data/firebase/app_firebase.dart';
 import 'package:instagram_clone/src/data/model/app_post.dart';
 import 'package:instagram_clone/src/feature/home/view/comment_screen.dart';
-import 'package:instagram_clone/src/feature/init_screen/view/init_screen.dart';
+import 'package:instagram_clone/src/feature/home/view/home_screen.dart';
+import 'package:instagram_clone/src/feature/home/view_model/home_view_model/home_view_model_cubit.dart';
+import 'package:instagram_clone/src/feature/init_screen/init_screen.dart';
 import 'package:instagram_clone/src/utils/app_colors.dart';
 import 'package:instagram_clone/src/utils/app_text_style.dart';
 import 'package:instagram_clone/src/widget/like_animation.dart';
@@ -14,7 +19,8 @@ import 'package:intl/intl.dart';
 
 class PostCard extends StatefulWidget {
   final AppPost? appPost;
-  const PostCard({
+  late final snap;
+  PostCard({
     Key? key,
     required this.appPost,
   }) : super(key: key);
@@ -25,12 +31,27 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   int commentLen = 0;
+
+  HomeViewModelCubit viewModel = HomeViewModelCubit();
   bool isLikeAnimating = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    getLengthComment();
+  }
+
+  void getLengthComment() async {
+    try {
+      QuerySnapshot snp = await FirebaseFirestore.instance
+          .collection("posts")
+          .doc(widget.appPost!.postId)
+          .collection("comments")
+          .get();
+      commentLen = snp.docs.length;
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
@@ -81,7 +102,7 @@ class _PostCardState extends State<PostCard> {
                 style: const TextStyle(color: AppColors.primaryColor),
                 children: [
                   TextSpan(
-                    text: "mohamed ",
+                    text: widget.appPost?.username ?? "",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -246,6 +267,7 @@ class _PostCardState extends State<PostCard> {
               ),
             ),
           ),
+          //? tap delete post
           IconButton(
             onPressed: () {
               showDialog(
@@ -268,7 +290,10 @@ class _PostCardState extends State<PostCard> {
                                 ),
                                 child: Text(e),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                viewModel.deletePost(
+                                    postId: widget.appPost!.postId);
+                              },
                             ),
                           )
                           .toList(),

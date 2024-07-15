@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:instagram_clone/src/feature/auth/register/view/register_screen.dart';
-import 'package:instagram_clone/src/feature/init_screen/view/init_screen.dart';
+import 'package:instagram_clone/src/feature/init_screen/init_screen.dart';
 import 'package:instagram_clone/src/save_data_user/save_data_user.dart';
 import 'package:provider/provider.dart';
 import '../view_model/login_view_model_cubit.dart';

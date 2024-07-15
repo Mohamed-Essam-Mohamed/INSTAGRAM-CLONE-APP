@@ -136,6 +136,11 @@ class AppFirebase {
     return await getCollectionPosts().doc(postId).set(post);
   }
 
+  //? delete post from firebase
+  static Future<void> deletePost({required String postId}) {
+    return getCollectionPosts().doc(postId).delete();
+  }
+
   //? get post from firebase snapshot
   static Stream<QuerySnapshot<AppPost>> getPost() {
     return getCollectionPosts().orderBy('date', descending: true).snapshots();

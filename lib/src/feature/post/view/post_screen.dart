@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instagram_clone/src/feature/auth/widget/bottom_sheet_selected_image.dart';
-import 'package:instagram_clone/src/feature/init_screen/view/init_screen.dart';
 import 'package:instagram_clone/src/feature/post/view/selected_image_screen.dart';
 import 'package:instagram_clone/src/utils/app_colors.dart';
 import 'package:instagram_clone/src/utils/app_shared_preferences.dart';
@@ -36,7 +35,7 @@ class _PostScreenState extends State<PostScreen> {
           icon: Icon(
             Icons.upload_sharp,
             color: AppColors.primaryColor,
-            size: 50.sp,
+            size: 60.sp,
           ),
         ),
       ),
@@ -56,11 +55,18 @@ class _PostScreenState extends State<PostScreen> {
           setState(() {});
 
           image != null
-              ? Future.delayed(const Duration(milliseconds: 500), () {
-                  Navigator.of(context).pushNamed(SelectedImageScreen.routeName,
+              ? Future.delayed(
+                  const Duration(milliseconds: 200),
+                  () {
+                    Navigator.of(context).pushNamed(
+                      SelectedImageScreen.routeName,
                       arguments: ImageDataClass(
-                          image: image!, urlImageProfile: urlImageProfile));
-                })
+                        image: image!,
+                        urlImageProfile: urlImageProfile,
+                      ),
+                    );
+                  },
+                )
               : Navigator.pop(context);
         },
         onPressedGallery: () async {
@@ -71,13 +77,18 @@ class _PostScreenState extends State<PostScreen> {
           setState(() {});
           // Navigator.pop(context);
           image != null
-              ? Future.delayed(const Duration(milliseconds: 500), () {
-                  Navigator.of(context).pushNamed(SelectedImageScreen.routeName,
+              ? Future.delayed(
+                  const Duration(milliseconds: 200),
+                  () {
+                    Navigator.of(context).pushNamed(
+                      SelectedImageScreen.routeName,
                       arguments: ImageDataClass(
                         image: image!,
                         urlImageProfile: urlImageProfile,
-                      ));
-                })
+                      ),
+                    );
+                  },
+                )
               : Navigator.pop(context);
         },
       ),

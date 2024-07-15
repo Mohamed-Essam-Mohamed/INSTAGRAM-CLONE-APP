@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:gap/gap.dart';
 import 'package:instagram_clone/src/feature/auth/login/view/login_screen.dart';
-import 'package:instagram_clone/src/feature/init_screen/view/init_screen.dart';
+import 'package:instagram_clone/src/feature/init_screen/init_screen.dart';
 import '../view_model/register_view_model_cubit.dart';
 import '../../widget/bottom_sheet_selected_image.dart';
 
