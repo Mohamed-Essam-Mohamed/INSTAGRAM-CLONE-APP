@@ -70,8 +70,11 @@ class _CommentScreenState extends State<CommentScreen> {
                       return CommentCardWidget(
                         comment: viewModel.data[index].comment,
                         photoUrl: viewModel.data[index].profileUrl,
-                        time: viewModel.data[index].date,
+                        time: viewModel.data[index].date ?? DateTime.now(),
                         userName: viewModel.data[index].username,
+                        commentId: viewModel.data[index].commentId,
+                        postId: arge,
+                        likes: viewModel.data[index].likes,
                       );
                     },
                     separatorBuilder: (context, index) => Gap(10.h),

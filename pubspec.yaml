@@ -45,6 +45,7 @@ dependencies:
   permission_handler: ^11.3.1
   provider: ^6.1.2
   shared_preferences: ^2.2.3
+  timeago: ^3.7.0
   uuid: ^4.4.0
 
 dev_dependencies:

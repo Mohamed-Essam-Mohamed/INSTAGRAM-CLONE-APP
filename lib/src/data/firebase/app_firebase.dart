@@ -176,8 +176,9 @@ class AppFirebase {
       "userName": userName,
       "uid": uid,
       "comment": comment,
-      "data": DateTime.now(),
+      "date": DateTime.now().millisecondsSinceEpoch,
       "commentId": commentId,
+      "likes": [],
     });
   }
 
@@ -186,7 +187,7 @@ class AppFirebase {
     return getCollectionPosts()
         .doc(postId)
         .collection("comments")
-        .orderBy("data", descending: true)
+        .orderBy("date", descending: true)
         .snapshots();
   }
 
@@ -197,5 +198,31 @@ class AppFirebase {
         .collection("comments")
         .get()
         .then((value) => value.size);
+  }
+
+  //? Update Likes Comment
+  static Future<void> updateLikesComment({
+    required String postId,
+    required String commentId,
+    required List likes,
+    required String uid,
+  }) async {
+    if (likes.contains(uid)) {
+      await getCollectionPosts()
+          .doc(postId)
+          .collection("comments")
+          .doc(commentId)
+          .update({
+        "likes": FieldValue.arrayRemove([uid])
+      });
+    } else {
+      await getCollectionPosts()
+          .doc(postId)
+          .collection("comments")
+          .doc(commentId)
+          .update({
+        "likes": FieldValue.arrayUnion([uid])
+      });
+    }
   }
 }
