@@ -12,6 +12,7 @@ import 'package:instagram_clone/src/feature/home/view/comment_screen.dart';
 import 'package:instagram_clone/src/feature/home/view/home_screen.dart';
 import 'package:instagram_clone/src/feature/home/view_model/home_view_model/home_view_model_cubit.dart';
 import 'package:instagram_clone/src/feature/init_screen/init_screen.dart';
+import 'package:instagram_clone/src/feature/profile/view/profile_screen.dart';
 import 'package:instagram_clone/src/save_data_user/save_data_user.dart';
 import 'package:instagram_clone/src/utils/app_colors.dart';
 import 'package:instagram_clone/src/utils/app_text_style.dart';
@@ -246,10 +247,21 @@ class _PostCardState extends State<PostCard> {
       ).copyWith(right: 0),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 20.r,
-            backgroundImage: NetworkImage(
-              widget.appPost?.profileImage ?? "",
+          InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ProfileScreen(
+                    uid: widget.appPost?.uid ?? "",
+                  ),
+                ),
+              );
+            },
+            child: CircleAvatar(
+              radius: 20.r,
+              backgroundImage: NetworkImage(
+                widget.appPost?.profileImage ?? "",
+              ),
             ),
           ),
           Expanded(

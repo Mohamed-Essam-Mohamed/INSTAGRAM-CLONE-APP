@@ -51,12 +51,14 @@ class _InitScreenState extends State<InitScreen> {
             this.index = index;
           });
         },
-        children: const [
-          HomeScreen(),
-          SearchScreen(),
-          PostScreen(),
-          LoveScreen(),
-          ProfileScreen(),
+        children: [
+          const HomeScreen(),
+          const SearchScreen(),
+          const PostScreen(),
+          const LoveScreen(),
+          ProfileScreen(
+            uid: provider.user?.uid ?? "",
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
