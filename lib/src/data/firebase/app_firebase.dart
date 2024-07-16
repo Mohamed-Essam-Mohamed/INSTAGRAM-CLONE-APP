@@ -146,6 +146,12 @@ class AppFirebase {
     return getCollectionPosts().orderBy('date', descending: true).snapshots();
   }
 
+  static Future<List<AppPost>> getPostInSearch() async {
+    var value =
+        await getCollectionPosts().orderBy('date', descending: true).get();
+    return value.docs.map((e) => e.data()).toList();
+  }
+
   //? update Likes
   static Future<void> updateLikes({
     required String postId,
@@ -229,5 +235,14 @@ class AppFirebase {
         "likes": FieldValue.arrayUnion([uid])
       });
     }
+  }
+
+  //! search functions
+  //? search uername firebase firestore
+  static Future<List<AppUser>> searchUser(String name) {
+    return getCollectionUsers()
+        .where('username', isGreaterThanOrEqualTo: name)
+        .get()
+        .then((value) => value.docs.map((e) => e.data()).toList());
   }
 }

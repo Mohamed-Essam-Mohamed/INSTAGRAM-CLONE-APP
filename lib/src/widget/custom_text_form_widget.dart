@@ -14,8 +14,10 @@ class CustomTextFormFieldWidget extends StatefulWidget {
   final TextEditingController controller;
   final Validator myValidator;
   final String hintText;
+  final bool isLable;
+  void Function(String)? onChanged;
 
-  const CustomTextFormFieldWidget({
+  CustomTextFormFieldWidget({
     required this.label,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
@@ -23,6 +25,8 @@ class CustomTextFormFieldWidget extends StatefulWidget {
     required this.controller,
     required this.myValidator,
     required this.hintText,
+    this.isLable = true,
+    this.onChanged,
   });
 
   @override
@@ -50,7 +54,7 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
           ),
           fillColor: AppColors.mobileSearchColor,
           filled: true,
-          labelText: widget.label,
+          labelText: widget.isLable ? widget.label : null,
           labelStyle: AppTextStyle.textStyle18
               .copyWith(fontSize: 20.sp, color: AppColors.primaryColor),
           contentPadding:
@@ -63,6 +67,7 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
         keyboardType: widget.keyboardType,
         controller: widget.controller,
         validator: widget.myValidator,
+        onChanged: widget.onChanged,
       ),
     );
   }
