@@ -12,10 +12,12 @@ import 'package:instagram_clone/src/feature/home/view/comment_screen.dart';
 import 'package:instagram_clone/src/feature/home/view/home_screen.dart';
 import 'package:instagram_clone/src/feature/home/view_model/home_view_model/home_view_model_cubit.dart';
 import 'package:instagram_clone/src/feature/init_screen/init_screen.dart';
+import 'package:instagram_clone/src/save_data_user/save_data_user.dart';
 import 'package:instagram_clone/src/utils/app_colors.dart';
 import 'package:instagram_clone/src/utils/app_text_style.dart';
 import 'package:instagram_clone/src/widget/like_animation.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class PostCard extends StatefulWidget {
   final AppPost? appPost;
@@ -56,6 +58,7 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
+    var userDataProvider = Provider.of<SaveUserProvider>(context);
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -66,7 +69,7 @@ class _PostCardState extends State<PostCard> {
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: Column(
         children: [
-          _headerSectionPostWidget(context),
+          _headerSectionPostWidget(context, userDataProvider),
           _imageSectionPostWidget(context),
           _likeCommentSectionPostWidget(context),
           _descriptionNumberCommentSectionPostWidget(context),
@@ -234,7 +237,8 @@ class _PostCardState extends State<PostCard> {
     );
   }
 
-  Container _headerSectionPostWidget(BuildContext context) {
+  Container _headerSectionPostWidget(
+      BuildContext context, SaveUserProvider providerUser) {
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: 4.h,
@@ -259,8 +263,16 @@ class _PostCardState extends State<PostCard> {
                 children: [
                   Text(
                     widget.appPost?.username ?? "",
-                    style: AppTextStyle.textStyle16.copyWith(
+                    style: AppTextStyle.textStyle14.copyWith(
                       color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Text(
+                    providerUser.user?.username ?? "",
+                    style: AppTextStyle.textStyle14.copyWith(
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ],
