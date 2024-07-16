@@ -245,4 +245,26 @@ class AppFirebase {
         .get()
         .then((value) => value.docs.map((e) => e.data()).toList());
   }
+
+  //? add following firebase firestore
+  static Future<void> addFollowing(
+      {required String uid, required String followingId}) async {
+    var data = await getCollectionUsers().doc(uid).get();
+    List following = data.data()!.following;
+    if (following.contains(followingId)) {
+      await getCollectionUsers().doc(uid).update({
+        "followers": FieldValue.arrayRemove([followingId])
+      });
+      await getCollectionUsers().doc(followingId).update({
+        "following": FieldValue.arrayRemove([uid])
+      });
+    } else {
+      await getCollectionUsers().doc(uid).update({
+        "followers": FieldValue.arrayUnion([followingId])
+      });
+      await getCollectionUsers().doc(followingId).update({
+        "following": FieldValue.arrayUnion([uid])
+      });
+    }
+  }
 }
